@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Excalibur Coding Test</title>
+</head>
+<body>
+
+<form th:object="${orderDetail}" th:action="@{/processOrderDetails}" method="post">
+
+    <input type="hidden" th:field="*{order_id}"/>
+
+    Order Amount:
+    <input type="number" th:field="*{order_amount}"/>
+    <span th:if="${#fields.hasErrors('order_amount')}" th:errors="*{order_amount}"></span><br/>
+
+    Order Description:
+    <textarea type="text" th:field="*{order_description}" cols="20" rows="10"></textarea>
+    <span th:if="${#fields.hasErrors('order_description')}" th:errors="*{order_description}"></span><br/>
+
+    <input type="submit" value="Submit"/>
+
+</form>
+</body>
+</html>

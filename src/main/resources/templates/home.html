@@ -6,22 +6,27 @@
 </head>
 <body>
 
-    <form th:object="${order}" th:action="@{/processForm}" method="post">
+    <form th:object="${orderDate}" th:action="@{/processForm}" method="post">
 
         <input type="hidden" th:field="*{order_id}"/>
 
         Order Date:
-        <input type="text" th:field="*{order_date}"/><br/>
-
-        Order Amount:
-        <input type="text" th:field="*{order_amount}"/><br/>
-
-        Order Description:
-        <textarea type="text" th:field="*{order_description}" cols="20" rows="10"/><br/>
+        <input type="date" th:field="*{order_date}"/>
+        <span th:if="${#fields.hasErrors('order_date')}" th:errors="*{order_date}">Please Enter a date.</span><br/>
 
         <input type="submit" value="Submit"/>
 
     </form>
+
+<script>
+    var dateControl = document.querySelector('input[type="date"]');
+    var year = new Date().getFullYear();
+    var month = new Date().getMonth();
+    var day = new Date().getDay();
+    dateControl.min = year + '-01-01';
+    dateControl.max = year + '-12-31';
+    dateControl.value = year + "-" + month + "-" + day;
+</script>
 
 </body>
 </html>

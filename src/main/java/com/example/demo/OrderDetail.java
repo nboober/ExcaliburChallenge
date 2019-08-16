@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.text.NumberFormat;
 
 @Entity(name = "order_detail")
@@ -13,8 +17,13 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long order_id;
 
+    @NotNull
+    @Min(1)
+    @Max(1000)
     private int order_amount;
 
+    @NotNull
+    @Size(min = 1)
     private String order_description;
 
     public long getOrder_id() {
@@ -25,12 +34,8 @@ public class OrderDetail {
         this.order_id = order_id;
     }
 
-    public String getOrder_amount() {
-
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        String currency = formatter.format(this.order_amount);
-
-        return currency;
+    public int getOrder_amount() {
+        return this.order_amount;
     }
 
     public void setOrder_amount(int order_amount) {

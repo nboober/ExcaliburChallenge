@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
@@ -24,20 +25,42 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model){
 
-        model.addAttribute("order", new OrderCombined());
+        model.addAttribute("orderDate", new OrderDate());
 
         return "home";
     }
 
-    @PostMapping("/processForm")
-    public String processForm(@Valid OrderCombined order, BindingResult result, Model model){
+    @RequestMapping("/processForm")
+    public String processForm(@Valid OrderDate orderDate, BindingResult result, Model model){
         if(result.hasErrors()){
+            model.addAttribute("orderDate", orderDate);
             return "home";
         }
 
-        orderCombinedRepository.save(order);
+        orderDateRepository.save(orderDate);
+        return "redirect:/orderDetail";
+
+    }
+
+    @GetMapping("/orderDetail")
+    public String orderDetail(Model model){
+
+        model.addAttribute("orderDetail", new OrderDetail());
+
+        return "orderDetail";
+    }
+
+    @RequestMapping("/processOrderDetails")
+    public String processOrderDetails(@Valid OrderDetail orderDetail, BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("orderDetail", orderDetail);
+            return "orderDetail";
+        }
+
+        orderDetailRepository.save(orderDetail);
         return "redirect:/";
 
     }
+
 
 }

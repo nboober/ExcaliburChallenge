@@ -8,6 +8,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.text.NumberFormat;
 
 @Entity(name = "order_combined")
 public class OrderCombined {
@@ -17,15 +18,15 @@ public class OrderCombined {
     private long order_id;
 
     @NotNull
-    
     private String order_date;
 
     @NotNull
     @Min(1)
-    @Max(500)
+    @Max(300)
     private int order_amount;
 
     @NotNull
+    @Size(min = 1)
     private String order_description;
 
     public long getOrder_id() {
@@ -45,7 +46,7 @@ public class OrderCombined {
     }
 
     public int getOrder_amount() {
-        return order_amount;
+        return this.order_amount;
     }
 
     public void setOrder_amount(int order_amount) {
