@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,18 +24,20 @@ public class HomeController {
     public String home(Model model){
 
         model.addAttribute("orderDate", new OrderDate());
+        model.addAttribute("orderCombined", new OrderCombined());
 
         return "home";
     }
 
     @RequestMapping("/processForm")
-    public String processForm(@Valid OrderDate orderDate, BindingResult result, Model model){
+    public String processForm(@Valid OrderDate orderDate, @ModelAttribute OrderCombined orderCombined, BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("orderDate", orderDate);
             return "home";
         }
 
         orderDateRepository.save(orderDate);
+
         return "redirect:/orderDetail";
 
     }
@@ -51,13 +51,22 @@ public class HomeController {
     }
 
     @RequestMapping("/processOrderDetails")
-    public String processOrderDetails(@Valid OrderDetail orderDetail, BindingResult result, Model model){
+    public String processOrderDetails(@Valid OrderDetail orderDetail, @ModelAttribute OrderCombined orderCombined,
+                                      //@RequestParam("orderDateId") long id,
+                                      BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("orderDetail", orderDetail);
             return "orderDetail";
         }
 
+//        OrderDate orderDate = orderDateRepository.findById(id).get();
+
         orderDetailRepository.save(orderDetail);
+//        orderCombined.setOrder_date(orderDate.getOrder_date());
+        orderCombined.setOrder_amount(orderDetail.getOrder_amount());
+        orderCombined.setOrder_description(orderDetail.getOrder_description());
+        orderCombinedRepository.save(orderCombined);
+
         return "redirect:/";
 
     }

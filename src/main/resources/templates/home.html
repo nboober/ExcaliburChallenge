@@ -21,11 +21,8 @@
 <script>
     var dateControl = document.querySelector('input[type="date"]');
     var year = new Date().getFullYear();
-    var month = new Date().getMonth();
-    var day = new Date().getDay();
     dateControl.min = year + '-01-01';
     dateControl.max = year + '-12-31';
-    dateControl.value = year + "-" + month + "-" + day;
 </script>
 
 </body>

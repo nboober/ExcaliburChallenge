@@ -17,16 +17,10 @@ public class OrderCombined {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long order_id;
 
-    @NotNull
     private String order_date;
 
-    @NotNull
-    @Min(1)
-    @Max(300)
     private int order_amount;
 
-    @NotNull
-    @Size(min = 1)
     private String order_description;
 
     public long getOrder_id() {
