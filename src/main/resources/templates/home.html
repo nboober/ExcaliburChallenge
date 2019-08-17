@@ -8,7 +8,9 @@
 
     <form th:object="${orderDate}" th:action="@{/processOrderDate}" method="post">
 
-        <input type="hidden" th:value="${order_id}" name="orderDateId"/>
+        <input type="hidden" th:field="*{order_id}" name="orderDateId"/>
+
+        <input type="hidden" th:value="${orderCombined.order_id}" name="combinedId"/>
 
         Order Date:
         <input type="date" th:field="*{order_date}"/>
