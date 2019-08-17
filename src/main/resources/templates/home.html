@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <form th:object="${orderDate}" th:action="@{/processForm}" method="post">
+    <form th:object="${orderDate}" th:action="@{/processOrderDate}" method="post">
 
         <input type="hidden" th:field="*{order_id}"/>
 

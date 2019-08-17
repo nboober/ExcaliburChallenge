@@ -29,8 +29,8 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping("/processForm")
-    public String processForm(@Valid OrderDate orderDate, @ModelAttribute OrderCombined orderCombined, BindingResult result, Model model){
+    @RequestMapping("/processOrderDate")
+    public String processOrderDate(@Valid OrderDate orderDate, @ModelAttribute OrderCombined orderCombined, BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("orderDate", orderDate);
             return "home";
