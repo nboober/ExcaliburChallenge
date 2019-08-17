@@ -30,7 +30,9 @@ public class HomeController {
     }
 
     @RequestMapping("/processOrderDate")
-    public String processOrderDate(@Valid OrderDate orderDate, @ModelAttribute OrderCombined orderCombined, BindingResult result, Model model){
+    public String processOrderDate(@Valid OrderDate orderDate, @ModelAttribute OrderCombined orderCombined,
+//                                   @RequestParam("orderDateId") long order_id,
+                                   BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("orderDate", orderDate);
             return "home";
@@ -40,28 +42,32 @@ public class HomeController {
         orderCombined.setOrderDate(orderDate);
         orderCombinedRepository.save(orderCombined);
         return "redirect:/orderDetail";
+//        return "redirect:/orderDetail/" + order_id;
 
     }
 
-    @GetMapping("/orderDetail")
-    public String orderDetail(Model model){
+//    @RequestMapping("/orderDetail/{id}")
+    @RequestMapping("/orderDetail")
+    public String orderDetail(
+            //@PathVariable("id") long order_id,
+                              Model model){
 
         model.addAttribute("orderDetail", new OrderDetail());
-
+//        model.addAttribute("orderDate", orderDateRepository.findById(order_id).get());
 
         return "orderDetail";
     }
 
     @RequestMapping("/processOrderDetails")
-    public String processOrderDetails(@Valid OrderDetail orderDetail, @ModelAttribute OrderCombined orderCombined,
-                                      //@RequestParam("orderDateId") long id,
+    public String processOrderDetails(@Valid OrderDetail orderDetail, @ModelAttribute("orderCombined") OrderCombined orderCombined,
+                                      //@RequestParam("orderDateId") long order_id,
                                       BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("orderDetail", orderDetail);
             return "orderDetail";
         }
 
-//        OrderDate orderDate = orderDateRepository.findById(id).get();
+//        OrderDate orderDate = orderDateRepository.findById(order_id).get();
 
 
         orderDetailRepository.save(orderDetail);
