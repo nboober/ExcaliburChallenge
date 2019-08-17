@@ -1,14 +1,12 @@
 package com.example.demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.text.NumberFormat;
+import java.util.Set;
 
 @Entity(name = "order_detail")
 public class OrderDetail {
@@ -25,6 +23,10 @@ public class OrderDetail {
     @NotNull
     @Size(min = 1)
     private String order_description;
+
+    @OneToMany(mappedBy = "orderDetail", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private Set<OrderCombined> orderCombined;
+
 
     public long getOrder_id() {
         return order_id;
@@ -48,5 +50,13 @@ public class OrderDetail {
 
     public void setOrder_description(String order_description) {
         this.order_description = order_description;
+    }
+
+    public Set<OrderCombined> getOrderCombined() {
+        return orderCombined;
+    }
+
+    public void setOrderCombined(Set<OrderCombined> orderCombined) {
+        this.orderCombined = orderCombined;
     }
 }

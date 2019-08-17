@@ -1,14 +1,14 @@
 package com.example.demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.criterion.Order;
+
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.text.NumberFormat;
+import java.util.Set;
 
 @Entity(name = "order_combined")
 public class OrderCombined {
@@ -22,6 +22,14 @@ public class OrderCombined {
     private int order_amount;
 
     private String order_description;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderDate_Id")
+    private OrderDate orderDate;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderDetail_Id")
+    private OrderDetail orderDetail;
 
     public long getOrder_id() {
         return order_id;
@@ -53,5 +61,21 @@ public class OrderCombined {
 
     public void setOrder_description(String order_description) {
         this.order_description = order_description;
+    }
+
+    public OrderDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(OrderDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
     }
 }

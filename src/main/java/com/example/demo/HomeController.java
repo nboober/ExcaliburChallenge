@@ -37,7 +37,8 @@ public class HomeController {
         }
 
         orderDateRepository.save(orderDate);
-
+        orderCombined.setOrderDate(orderDate);
+        orderCombinedRepository.save(orderCombined);
         return "redirect:/orderDetail";
 
     }
@@ -46,6 +47,7 @@ public class HomeController {
     public String orderDetail(Model model){
 
         model.addAttribute("orderDetail", new OrderDetail());
+
 
         return "orderDetail";
     }
@@ -61,8 +63,10 @@ public class HomeController {
 
 //        OrderDate orderDate = orderDateRepository.findById(id).get();
 
+
         orderDetailRepository.save(orderDetail);
 //        orderCombined.setOrder_date(orderDate.getOrder_date());
+        orderCombined.setOrderDetail(orderDetail);
         orderCombined.setOrder_amount(orderDetail.getOrder_amount());
         orderCombined.setOrder_description(orderDetail.getOrder_description());
         orderCombinedRepository.save(orderCombined);
