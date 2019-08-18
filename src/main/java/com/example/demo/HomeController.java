@@ -46,26 +46,32 @@ public class HomeController {
 
     }
 
-    @RequestMapping("/orderDetail")
-    public String orderDetail(Model model){
+    @RequestMapping("/orderDetail/{order_id}")
+    public String orderDetail(@PathVariable("order_id") long order_id,
+                              Model model){
 
         model.addAttribute("orderDetail", new OrderDetail());
+        model.addAttribute("orderCombined", orderCombinedRepository.findById(order_id).get());
 
         return "orderDetail";
     }
 
     @RequestMapping("/processOrderDetails")
-    public String processOrderDetails(@Valid OrderDetail orderDetail, @ModelAttribute("orderCombined") OrderCombined orderCombined, BindingResult result, Model model){
+    public String processOrderDetails(@Valid OrderDetail orderDetail, @RequestParam("combinedId") long order_id, @ModelAttribute("orderCombined") OrderCombined orderCombined, BindingResult result, Model model){
         if(result.hasErrors()){
+            model.addAttribute("orderCombined", orderCombinedRepository.findById(order_id).get());
             model.addAttribute("orderDetail", orderDetail);
             return "orderDetail";
         }
 
+        OrderCombined combined = orderCombinedRepository.findById(order_id).get();
+
+
         orderDetailRepository.save(orderDetail);
-        orderCombined.setOrderDetail(orderDetail);
-        orderCombined.setOrder_amount(orderDetail.getOrder_amount());
-        orderCombined.setOrder_description(orderDetail.getOrder_description());
-        orderCombinedRepository.save(orderCombined);
+        combined.setOrderDetail(orderDetail);
+        combined.setOrder_amount(orderDetail.getOrder_amount());
+        combined.setOrder_description(orderDetail.getOrder_description());
+        orderCombinedRepository.save(combined);
 
         return "redirect:/";
 
