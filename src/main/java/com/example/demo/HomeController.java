@@ -30,7 +30,9 @@ public class HomeController {
     }
 
     @RequestMapping("/processOrderDate")
-    public String processOrderDate(@Valid OrderDate orderDate, @ModelAttribute OrderCombined orderCombined, BindingResult result, Model model){
+    public String processOrderDate(@Valid OrderDate orderDate, @ModelAttribute("orderCombined") OrderCombined orderCombined,
+//                                   @RequestParam("orderDateId") long order_id,
+                                   BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("orderDate", orderDate);
             return "home";
@@ -39,7 +41,12 @@ public class HomeController {
         orderDateRepository.save(orderDate);
         orderCombined.setOrderDate(orderDate);
         orderCombinedRepository.save(orderCombined);
-        return "redirect:/orderDetail";
+
+        long order_id = orderCombined.getOrder_id();
+
+        return "redirect:/orderDetail/"+ order_id;
+//        return "redirect:/orderDetail/" + order_id;
+
     }
 
     @RequestMapping("/orderDetail")

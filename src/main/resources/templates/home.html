@@ -6,17 +6,21 @@
 </head>
 <body>
 
-    <form th:object="${orderDate}" th:action="@{/processOrderDate}" method="post">
+        <form th:object="${orderDate}" th:action="@{/processOrderDate}" method="post">
 
-        <input type="hidden" th:field="*{order_id}" name="orderDateId"/>
+            <input type="hidden" th:field="*{order_id}" name="orderDateId"/>
 
         Order Date:
         <input type="date" th:field="*{order_date}"/>
         <span th:if="${#fields.hasErrors('order_date')}" th:errors="*{order_date}">Please Enter a date.</span><br/>
 
-        <input type="submit" value="Submit"/>
+            Order Date:
+            <input type="date" th:field="*{order_date}"/>
+            <span th:if="${#fields.hasErrors('order_date')}" th:errors="*{order_date}">Please Enter a date.</span><br/>
 
-    </form>
+            <input type="submit" value="Submit"/>
+
+        </form>
 
 <script>
     var dateControl = document.querySelector('input[type="date"]');
