@@ -1,14 +1,6 @@
 package com.example.demo;
 
-import org.hibernate.criterion.Order;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.text.NumberFormat;
-import java.util.Set;
 
 @Entity(name = "order_combined")
 public class OrderCombined {
