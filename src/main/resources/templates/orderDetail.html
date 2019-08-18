@@ -11,6 +11,8 @@
 
     <input type="hidden" th:field="*{order_id}"/>
 
+    <input type="hidden" th:value="${orderCombined.order_id}" name="combinedId"/>
+
     Order Amount:
     <input type="number" th:field="*{order_amount}"/>
     <span th:if="${#fields.hasErrors('order_amount')}" th:errors="*{order_amount}"></span><br/>
